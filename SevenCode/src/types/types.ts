@@ -6,6 +6,13 @@ export default interface ArticleType {
   blocks: Array<TextBlock | ImageBlock | PullQuoteBlock>;
 }
 
+export interface HeaderProps {
+  headline: string;
+  source: string;
+  byline: string;
+  publicationDate: string;
+}
+
 export interface TextBlock {
   kind: "text";
   text: string;

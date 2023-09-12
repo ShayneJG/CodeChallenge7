@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import ArticleType from "./types/types";
+import ArticleType, { HeaderProps } from "./types/types";
+import Header from "./components/Header";
 
 //Article is passed the fetch request path.
 function Article({ ArticleLocation }: { ArticleLocation: string }) {
@@ -35,8 +36,22 @@ function Article({ ArticleLocation }: { ArticleLocation: string }) {
   }
 
   //article fetched successfully and json is loaded into state.
+
   if (articleData) {
-    return <></>;
+    //copying article data and passing to header
+    const { headline, source, byline, publicationDate } = articleData;
+    const headerData: HeaderProps = {
+      headline,
+      source,
+      byline,
+      publicationDate,
+    };
+
+    return (
+      <article>
+        <Header headerData={headerData} />
+      </article>
+    );
   }
 }
 
