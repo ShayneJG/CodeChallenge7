@@ -2,23 +2,42 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import ArticleType from "./types/types";
 
-function Article() {
+//Article is passed the fetch request path.
+function Article({ ArticleLocation }: { ArticleLocation: string }) {
   const [articleData, setArticleData] = useState<ArticleType | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  //grab data on first render
   useEffect(() => {
-    //fetching to mimic an API call
-    fetch("/testData/article.json")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
+    async function fetchData() {
+      try {
+        const response = await fetch(ArticleLocation);
+        if (!response.ok) {
+          throw new Error(`Error fetching data: ${response.status}`);
+        }
+        const data = await response.json();
         setArticleData(data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error(error);
-      });
+        setError("Article failed to load...");
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
   }, []);
 
-  return <p>test</p>;
+  //does not attempt to render if article data did not arrive
+  if (error) {
+    <div>{error}</div>;
+  } else if (loading) {
+    return <div>fancy loading effect</div>;
+  }
+
+  //article fetched successfully and json is loaded into state.
+  if (articleData) {
+    return <></>;
+  }
 }
 
 export default Article;

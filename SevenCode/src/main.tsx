@@ -5,6 +5,6 @@ import Article from "./App.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Article />
+    <Article ArticleLocation={"/testData/article.json"} />
   </React.StrictMode>
 );
