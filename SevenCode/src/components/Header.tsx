@@ -3,7 +3,19 @@ import styles from "../styles/header.module.css";
 import PlusIcon from "/public/assets/plus.svg";
 export default function Header({ headerData }: { headerData: HeaderProps }) {
   const { headline, source, byline, publicationDate } = headerData;
-
+  //basic error handling
+  if (!headline) {
+    console.error("Headline missing");
+  }
+  if (!source) {
+    console.error("Source missing");
+  }
+  if (!byline) {
+    console.error("Byline missing");
+  }
+  if (!publicationDate) {
+    console.error("Publication date missing");
+  }
   return (
     <header className={styles.header}>
       <h1 className={styles.title}>{headline}</h1>
@@ -20,11 +32,8 @@ export default function Header({ headerData }: { headerData: HeaderProps }) {
 
   //formats date and returns string that matches the requested design.
   function dateFormatter(dateToFormat: string) {
-    function isValidDate() {
-      return isNaN(Date.parse(dateToFormat));
-    }
-
-    if (isValidDate()) {
+    //check if date is valid
+    if (isNaN(Date.parse(dateToFormat))) {
       console.error("Date not valid");
       return "date not found";
     }
