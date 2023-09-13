@@ -4,6 +4,7 @@ import PlusIcon from "/public/assets/plus.svg";
 export default function Header({ headerData }: { headerData: HeaderProps }) {
   const { headline, source, byline, publicationDate } = headerData;
   //basic error handling
+  //opted to still render the component even if data is missing.
   if (!headline) {
     console.error("Headline missing");
   }
@@ -31,14 +32,16 @@ export default function Header({ headerData }: { headerData: HeaderProps }) {
   );
 
   //formats date and returns string that matches the requested design.
+  //I wasn't sure whether libraries were allowed, so I opted to format manually.
   function dateFormatter(dateToFormat: string) {
-    //check if date is valid
+    //check if date is valid.
     if (isNaN(Date.parse(dateToFormat))) {
       console.error("Date not valid");
       return "date not found";
     }
     const date = new Date(dateToFormat);
 
+    //month lookup to match the number returned by getMonth.
     const months = [
       "January",
       "February",
