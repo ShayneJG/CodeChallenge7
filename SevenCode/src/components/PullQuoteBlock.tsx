@@ -8,7 +8,7 @@ export default function PullQuoteBlock({
   return (
     <div className={styles.pullQuoteBlock}>
       <p className={styles.text}>{data.text}</p>
-      <p>{data.attribution}</p>
+      <p className={styles.attribution}>{data.attribution}</p>
     </div>
   );
 }

@@ -20,6 +20,14 @@ export default function Header({ headerData }: { headerData: HeaderProps }) {
 
   //formats date and returns string that matches the requested design.
   function dateFormatter(dateToFormat: string) {
+    function isValidDate() {
+      return isNaN(Date.parse(dateToFormat));
+    }
+
+    if (isValidDate()) {
+      console.error("Date not valid");
+      return "date not found";
+    }
     const date = new Date(dateToFormat);
 
     const months = [
