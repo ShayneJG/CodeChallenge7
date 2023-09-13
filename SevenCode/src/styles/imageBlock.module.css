@@ -1,0 +1,13 @@
+.image {
+    width: 100%;
+    max-width: min-content;
+}
+
+.caption {
+    padding-top: 1em;
+    text-indent: 1em;
+}
+
+figure {
+    margin: 2.5em;
+}
