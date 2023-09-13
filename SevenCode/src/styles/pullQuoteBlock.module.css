@@ -1,0 +1,13 @@
+.pullQuoteBlock {
+    margin: 10%;
+    padding-left: 1em;
+    border-left: 0.5em solid blue;
+}
+
+.text {
+    font-size: 1.5em;
+    font-style: italic;
+}
+
+
+
