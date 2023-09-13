@@ -2,7 +2,7 @@ import React from "react";
 import { Intentions, TextBlockProps } from "../types/types";
 
 //Applies intentions to the text.
-function formatText(text: string, intentions: Intentions[]) {
+export function formatText(text: string, intentions: Intentions[]) {
   let error: boolean = false;
 
   if (!intentions || intentions.length === 0) {
