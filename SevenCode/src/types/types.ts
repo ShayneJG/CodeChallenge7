@@ -5,7 +5,7 @@ export interface ArticleProps {
   publicationDate: string;
   blocks: Array<TextBlockProps | ImageBlockProps | PullQuoteBlockProps>;
 }
-//ArticleProps could inheret HeaderProps to avoid repitition, but this feels more compositionally correct.
+//ArticleProps could inherit HeaderProps to avoid repitition, but this feels more compositionally correct.
 export interface HeaderProps {
   headline: string;
   source: string;

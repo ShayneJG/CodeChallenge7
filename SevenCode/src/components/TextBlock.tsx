@@ -3,10 +3,10 @@ import { Intentions, TextBlockProps } from "../types/types";
 
 //Applies intentions to the text.
 export function formatText(text: string, intentions: Intentions[]) {
-  let error: boolean = false;
+  //TODO: comment
 
   if (!intentions || intentions.length === 0) {
-    return <>{text}</>;
+    return [<>{text}</>];
   }
 
   //sorts the array to ensure that intentions are mapped in the appropriate order
@@ -23,22 +23,22 @@ export function formatText(text: string, intentions: Intentions[]) {
   intentions.forEach((intention, index) => {
     const { kind, index: startIndex, length } = intention;
 
-    //validate that intentions start in the lower bounds of the text
+    //validate that the starting index of the intentions are inside the text.
     if (startIndex < 0) {
       console.error(`intention ${startIndex}, ${length} cannot start below 0.`);
-      error = true;
+      return;
       //validate that intentions do not overlap
     } else if (currentIndex > startIndex) {
       console.error(
         `intention ${startIndex}, ${length} cannot overlap another intention.`
       );
-      error = true;
+      return;
       //validate that intention does not run over length of the text.
     } else if (startIndex + length > text.length) {
       console.error(
         `intention ${startIndex}, ${length} exceeded the length of the text.`
       );
-      error = true;
+      return;
       //if everything is fine, proceed with the formatting
     } else {
       const beforeText = text.slice(currentIndex, startIndex);
@@ -51,50 +51,17 @@ export function formatText(text: string, intentions: Intentions[]) {
 
       //add new kind handling here.
       //TODO: handle nested intention?
-      switch (kind) {
-        case "emphasized": {
-          formattedText.push(
-            <React.Fragment key={index}>
-              <em>{text.slice(startIndex, startIndex + length)}</em>
-            </React.Fragment>
-          );
-          break;
-        }
-        case "important": {
-          formattedText.push(
-            <React.Fragment key={index}>
-              <strong>{text.slice(startIndex, startIndex + length)}</strong>
-            </React.Fragment>
-          );
-          break;
-        }
-        default: {
-          formattedText.push(
-            <React.Fragment key={index}>
-              {text.slice(startIndex, startIndex + length)}
-            </React.Fragment>
-          );
 
-          console.error(
-            `intention ${index} not applied to: ${text.slice(
-              startIndex,
-              startIndex + length
-            )}; kind not found.`
-          );
-        }
-      }
+      formattedText.push(
+        <React.Fragment key={index}>
+          {renderIntention(kind, text.slice(startIndex, startIndex + length))}
+        </React.Fragment>
+      );
     }
 
-    // Update the current index
     currentIndex = startIndex + length;
   });
-  //end of forEach.
 
-  //if intentions have caused errors at any point, avoid rendering any formatting for this block.
-  //doing this to avoid partially formatted / broken looking text.
-  if (error) {
-    return <>{text}</>;
-  }
   // Add any remaining text after the last intention
   const remainingText = text.slice(currentIndex);
   if (remainingText) {
@@ -109,6 +76,21 @@ export function formatText(text: string, intentions: Intentions[]) {
 }
 
 //textblock component
+
+function renderIntention(kind: string, text: string) {
+  switch (kind) {
+    case "emphasized": {
+      return <em>{text}</em>;
+    }
+    case "important": {
+      return <strong>{text}</strong>;
+    }
+    default: {
+      console.error(`intention kind of type ${kind} not found.`);
+      return <>{text}</>;
+    }
+  }
+}
 
 export default function TextBlock({ data }: { data: TextBlockProps }) {
   if (!data.text) {
