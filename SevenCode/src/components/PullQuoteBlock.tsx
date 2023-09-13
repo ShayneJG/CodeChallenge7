@@ -8,7 +8,8 @@ export default function PullQuoteBlock({
   if (!data.text) {
     console.error(`PullQuoteBlock is missing text`);
     return <></>;
-  } else if (!data.attribution) {
+  }
+  if (!data.attribution) {
     console.error(`PullQuoteBlock is missing an attribution`);
     return <></>;
   }

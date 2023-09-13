@@ -3,11 +3,13 @@ import { Intentions, TextBlockProps } from "../types/types";
 
 //Applies intentions to the text.
 function formatText(text: string, intentions: Intentions[]) {
+  let error: boolean = false;
+
   if (!intentions || intentions.length === 0) {
     return <>{text}</>;
   }
 
-  //sorts the array to ensure that intentions are mapped from lowest to highest
+  //sorts the array to ensure that intentions are mapped in the appropriate order
   intentions.sort((a, b) => {
     return a.index - b.index;
   });
@@ -24,16 +26,19 @@ function formatText(text: string, intentions: Intentions[]) {
     //validate that intentions start in the lower bounds of the text
     if (startIndex < 0) {
       console.error(`intention ${startIndex}, ${length} cannot start below 0.`);
+      error = true;
       //validate that intentions do not overlap
     } else if (currentIndex > startIndex) {
       console.error(
         `intention ${startIndex}, ${length} cannot overlap another intention.`
       );
+      error = true;
       //validate that intention does not run over length of the text.
     } else if (startIndex + length > text.length) {
       console.error(
         `intention ${startIndex}, ${length} exceeded the length of the text.`
       );
+      error = true;
       //if everything is fine, proceed with the formatting
     } else {
       const beforeText = text.slice(currentIndex, startIndex);
@@ -85,6 +90,11 @@ function formatText(text: string, intentions: Intentions[]) {
   });
   //end of forEach.
 
+  //if intentions have caused errors at any point, avoid rendering any formatting for this block.
+  //doing this to avoid partially formatted / broken looking text.
+  if (error) {
+    return <>{text}</>;
+  }
   // Add any remaining text after the last intention
   const remainingText = text.slice(currentIndex);
   if (remainingText) {
