@@ -1,21 +1,33 @@
 import { HeaderProps } from "../types/types";
-
+import styles from "../styles/header.module.css";
+import PlusIcon from "/public/assets/plus.svg";
 export default function Header({ headerData }: { headerData: HeaderProps }) {
   const { headline, source, byline, publicationDate } = headerData;
 
   return (
-    <header>
-      <h1>{headline}</h1>
-      <div>
-        <p>{byline}</p>
-        <p>{source}</p>
+    <header className={styles.header}>
+      <h1 className={styles.title}>{headline}</h1>
+      <div className={styles.subtextContainer}>
+        <p className={styles.byline}>{byline}, &nbsp;</p>
+        <p className={styles.source}>{source}</p>
       </div>
-      <p>{dateFormatter(publicationDate)}</p>
+      <p className={styles.publicationDate}>
+        {dateFormatter(publicationDate)}{" "}
+        <img className={styles.plusIcon} src={PlusIcon} />
+      </p>
     </header>
   );
 
   //formats date and returns string that matches the requested design.
   function dateFormatter(dateToFormat: string) {
+    function isValidDate() {
+      return isNaN(Date.parse(dateToFormat));
+    }
+
+    if (isValidDate()) {
+      console.error("Date not valid");
+      return "date not found";
+    }
     const date = new Date(dateToFormat);
 
     const months = [

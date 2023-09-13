@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 import { ArticleProps, HeaderProps } from "./types/types";
 import Header from "./components/Header";
 import TextBlock from "./components/TextBlock";
 import ImageBlock from "./components/ImageBlock";
 import PullQuoteBlock from "./components/PullQuoteBlock";
+import styles from "./styles/article.module.css";
 
 //Article is passed the fetch request path.
 function Article({ ArticleLocation }: { ArticleLocation: string }) {
@@ -93,7 +93,7 @@ function Article({ ArticleLocation }: { ArticleLocation: string }) {
       }
     });
     return (
-      <article>
+      <article className={styles.article}>
         <Header headerData={headerData} />
         {blocks}
       </article>
