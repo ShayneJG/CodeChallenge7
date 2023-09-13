@@ -12,9 +12,9 @@ function Article({ ArticleLocation }: { ArticleLocation: string }) {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  async function fetchData() {
+  async function fetchData(location: string) {
     try {
-      const response = await fetch(ArticleLocation);
+      const response = await fetch(location);
       if (!response.ok) {
         throw new Error(`Error fetching data: ${response.status}`);
       }
@@ -30,7 +30,7 @@ function Article({ ArticleLocation }: { ArticleLocation: string }) {
   //grab data on first render
   //TODO: make this an anonymous async?
   useEffect(() => {
-    fetchData();
+    fetchData(ArticleLocation);
   }, []);
 
   if (error) {
@@ -67,7 +67,7 @@ function Article({ ArticleLocation }: { ArticleLocation: string }) {
         }
         //handle basic errors
         default: {
-          console.error(`Block kind missing or broken for: ${block}`);
+          console.error(`Block kind missing or incorrect`);
         }
       }
     });
