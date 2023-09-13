@@ -101,6 +101,10 @@ function formatText(text: string, intentions: Intentions[]) {
 //textblock component
 
 export default function TextBlock({ data }: { data: TextBlockProps }) {
+  if (!data.text) {
+    console.error(`TextBlock is missing a text property`);
+    return <></>;
+  }
   const formattedText = formatText(data.text, data.intentions);
   return <p>{formattedText}</p>;
 }

@@ -57,34 +57,13 @@ function Article({ ArticleLocation }: { ArticleLocation: string }) {
       const key: string = `${block.kind} ${index}`;
       switch (block.kind) {
         case "text": {
-          if (!block.text) {
-            console.error(`${key} is missing a text property`);
-            break;
-          } else {
-            return <TextBlock key={key} data={block} />;
-          }
+          return <TextBlock key={key} data={block} />;
         }
         case "image": {
-          if (!block.url) {
-            console.error(`${key} is missing an image source`);
-            break;
-          } else if (!block.captionText) {
-            console.error(`${key} is missing a caption`);
-            break;
-          } else {
-            return <ImageBlock key={key} data={block} />;
-          }
+          return <ImageBlock key={key} data={block} />;
         }
         case "pull-quote": {
-          if (!block.text) {
-            console.error(`${key} is missing text`);
-            break;
-          } else if (!block.attribution) {
-            console.error(`${key} is missing an attribution`);
-            break;
-          } else {
-            return <PullQuoteBlock key={key} data={block} />;
-          }
+          return <PullQuoteBlock key={key} data={block} />;
         }
         //handle basic errors
         default: {
