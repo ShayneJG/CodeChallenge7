@@ -1,6 +1,6 @@
 import { HeaderProps } from "../types/types";
 import styles from "../styles/header.module.css";
-import PlusIcon from "/public/assets/plus.svg";
+import PlusIcon from "/assets/plus.svg";
 export default function Header({ headerData }: { headerData: HeaderProps }) {
   const { headline, source, byline, publicationDate } = headerData;
   //basic error handling
