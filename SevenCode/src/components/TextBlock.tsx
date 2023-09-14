@@ -9,7 +9,7 @@ export function formatText(text: string, intentions: Intentions[]) {
     return [<>{text}</>];
   }
 
-  //sorts the array to ensure that intentions are mapped in the appropriate order
+  //sorts the array to ensure that intentions are handled in the appropriate order.
   intentions.sort((a, b) => {
     return a.index - b.index;
   });
@@ -24,8 +24,8 @@ export function formatText(text: string, intentions: Intentions[]) {
     const { kind, index: startIndex, length } = intention;
 
     //validate that the starting index of the intentions are inside the text.
-    if (startIndex < 0) {
-      console.error(`intention ${startIndex}, ${length} cannot start below 0.`);
+    if (startIndex < 0 || startIndex > text.length) {
+      console.error(`intention ${startIndex}, ${length} out of bounds.`);
       return;
       //validate that intentions do not overlap
     } else if (currentIndex > startIndex) {
