@@ -9,3 +9,6 @@ Intentions do not nest, and should not overlap - log errors if they do and do no
 # Notes
 
 There is a jest test for the formatText function to ensure that it is correctly handling errors. 
+Article takes the URL/endpoint as a prop.
+
+The JSON is being fetched as if it was a URL/endpoint to mimic a real usecase. 
