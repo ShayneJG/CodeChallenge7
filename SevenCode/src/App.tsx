@@ -12,6 +12,7 @@ function Article({ ArticleLocation }: { ArticleLocation: string }) {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  //simulating API request to fetch article data.
   async function fetchData(location: string) {
     try {
       const response = await fetch(location);
